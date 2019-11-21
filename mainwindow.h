@@ -18,21 +18,30 @@ public:
     boost::filesystem::path ImageFolder;
     boost::filesystem::path ROIFolder;
     boost::filesystem::path OptionsFolder;
-    boost::filesystem::path OutFolder;
+    boost::filesystem::path MzFeaturesOutFolder;
+    boost::filesystem::path ClassyfiersFolder;
+    boost::filesystem::path ClassyfiersOptionFile;
+    boost::filesystem::path PredictorOutputFolder;
     boost::filesystem::path BatFolder;
 
-    std::string OutFilePrefix;
-    std::string BatFileName;
-    std::string FilePattern;
+    //std::string OutFilePrefix;
+    //std::string BatFileName;
+    //std::string FilePattern;
 
     std::vector<std::string> ImageFileNamesVector;
-    std::vector<std::string> RoiFileNamesVector;
+    std::vector<std::string> ROIFileNamesVector;
     std::vector<std::string> OptionsFileNamesVector;
 
 
 
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+    void ReloadPaths();
+    void OpenQMaZdaFolder();
+    void OpenImageFolder();
+    void OpenROIFolder();
+    void OpenOptionsFolder();
 
 private slots:
 
@@ -44,11 +53,29 @@ private slots:
 
     void on_pushButtonOpenOptionsFolder_clicked();
 
-    void on_pushButtonOpenOutFolder_clicked();
-
     void on_pushButtonOpenBatFolder_clicked();
 
-    void on_lineEditFilePattern_returnPressed();
+    void on_pushButtonOpenClassyfiersFolder_clicked();
+
+    void on_pushButtonOpenClassyfiersOptionsFile_clicked();
+
+    void on_pushButtonOpenPredictorOutputFolder_clicked();
+
+    void on_pushButtonOpenMzFeaturesOutFolder_clicked();
+
+    void on_lineEditImageFilePattern_returnPressed();
+
+    void on_lineEditOptionsFilePattern_returnPressed();
+
+    void on_lineEditROIFilePattern_returnPressed();
+
+    void on_lineEditImageFolder_returnPressed();
+
+    void on_lineEditROIFolder_returnPressed();
+
+    void on_lineEditOptionsFolder_returnPressed();
+
+    void on_lineEditMaZdaFolder_returnPressed();
 
 private:
     Ui::MainWindow *ui;
