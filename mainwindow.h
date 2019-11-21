@@ -42,6 +42,13 @@ public:
     void OpenImageFolder();
     void OpenROIFolder();
     void OpenOptionsFolder();
+    void OpenMzFeauresFolder();
+    void OpenClassyfiersFolder();
+    void OpenClassyfiersOptionsFile();
+    void OpenPredictorOutputFotder();
+    void OpenBatFolder();
+
+    void CreateBat();
 
 private slots:
 
@@ -76,6 +83,20 @@ private slots:
     void on_lineEditOptionsFolder_returnPressed();
 
     void on_lineEditMaZdaFolder_returnPressed();
+
+    void on_lineEditMzFeaturesOutFolder_returnPressed();
+
+    void on_lineEditClassyfiersFolder_returnPressed();
+
+    void on_lineEditClassyfiersOptionsFile_returnPressed();
+
+    void on_lineEditPredictorOutputFolder_returnPressed();
+
+    void on_lineEditBatFolder_returnPressed();
+
+    void on_pushButtonClearOut_clicked();
+
+    void on_pushButtonCreateBatFile_clicked();
 
 private:
     Ui::MainWindow *ui;

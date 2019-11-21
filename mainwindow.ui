@@ -140,12 +140,15 @@
       <height>21</height>
      </rect>
     </property>
+    <property name="text">
+     <string>H:/CTquality/Features/Gabor/l26f3</string>
+    </property>
    </widget>
    <widget class="QLineEdit" name="lineEditOutFilePrefix">
     <property name="geometry">
      <rect>
-      <x>500</x>
-      <y>330</y>
+      <x>10</x>
+      <y>310</y>
       <width>113</width>
       <height>21</height>
      </rect>
@@ -157,8 +160,8 @@
    <widget class="QLabel" name="labelOutFilePrefix">
     <property name="geometry">
      <rect>
-      <x>500</x>
-      <y>310</y>
+      <x>10</x>
+      <y>290</y>
       <width>91</width>
       <height>16</height>
      </rect>
@@ -209,22 +212,28 @@
       <height>21</height>
      </rect>
     </property>
+    <property name="text">
+     <string>H:/CTquality</string>
+    </property>
    </widget>
    <widget class="QLineEdit" name="lineEditBatFileName">
     <property name="geometry">
      <rect>
-      <x>650</x>
-      <y>330</y>
+      <x>160</x>
+      <y>310</y>
       <width>113</width>
       <height>21</height>
      </rect>
+    </property>
+    <property name="text">
+     <string>Gaborl26F3</string>
     </property>
    </widget>
    <widget class="QLabel" name="labelBatFileName">
     <property name="geometry">
      <rect>
-      <x>650</x>
-      <y>310</y>
+      <x>160</x>
+      <y>290</y>
       <width>91</width>
       <height>16</height>
      </rect>
@@ -256,7 +265,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Image Fie pattern</string>
+     <string>Image File pattern</string>
     </property>
    </widget>
    <widget class="QTextEdit" name="textEditImageFiles">
@@ -291,6 +300,9 @@
       <height>21</height>
      </rect>
     </property>
+    <property name="text">
+     <string>H:/CTquality/Classyfier/Gabor/l26f3</string>
+    </property>
    </widget>
    <widget class="QPushButton" name="pushButtonOpenPredictorOutputFolder">
     <property name="geometry">
@@ -313,6 +325,9 @@
       <width>601</width>
       <height>21</height>
      </rect>
+    </property>
+    <property name="text">
+     <string>H:/CTquality/PredictOut</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButtonOpenClassyfiersOptionsFile">
@@ -337,6 +352,9 @@
       <height>21</height>
      </rect>
     </property>
+    <property name="text">
+     <string>H:/QMaZda19_08_beta/ClassOptions.txt</string>
+    </property>
    </widget>
    <widget class="QLabel" name="labelROIFilePattern">
     <property name="geometry">
@@ -348,7 +366,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>ROI Fie pattern</string>
+     <string>ROI File pattern</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="lineEditROIFilePattern">
@@ -397,7 +415,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Options Fie pattern</string>
+     <string>Options File pattern</string>
     </property>
    </widget>
    <widget class="QTextEdit" name="textEditOptionsFiles">
@@ -408,6 +426,71 @@
       <width>251</width>
       <height>191</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonCreateBatFile">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>310</y>
+      <width>101</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Create *.bat file</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonClearOut">
+    <property name="geometry">
+     <rect>
+      <x>410</x>
+      <y>310</y>
+      <width>80</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Clear Out</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkBoxCreateFeaturesBat">
+    <property name="geometry">
+     <rect>
+      <x>530</x>
+      <y>290</y>
+      <width>121</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Create Features Bat</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkBoxCreateTrainingBat">
+    <property name="geometry">
+     <rect>
+      <x>530</x>
+      <y>310</y>
+      <width>121</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Create Training Bat</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkBoxCreatePredictorBat">
+    <property name="geometry">
+     <rect>
+      <x>530</x>
+      <y>330</y>
+      <width>121</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Create Predictor Bat</string>
     </property>
    </widget>
   </widget>
