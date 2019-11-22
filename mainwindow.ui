@@ -154,7 +154,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>CT_</string>
+     <string>CT_l26f3_</string>
     </property>
    </widget>
    <widget class="QLabel" name="labelOutFilePrefix">
@@ -226,7 +226,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Gaborl26F3</string>
+     <string>Gaborl26f3</string>
     </property>
    </widget>
    <widget class="QLabel" name="labelBatFileName">
@@ -327,7 +327,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>H:/CTquality/PredictOut</string>
+     <string>H:/CTquality/PredictOut/Gabor/l26f3</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButtonOpenClassyfiersOptionsFile">
@@ -491,6 +491,19 @@
     </property>
     <property name="text">
      <string>Create Predictor Bat</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonReload">
+    <property name="geometry">
+     <rect>
+      <x>410</x>
+      <y>340</y>
+      <width>80</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Reload</string>
     </property>
    </widget>
   </widget>

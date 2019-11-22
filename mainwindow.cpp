@@ -222,7 +222,7 @@ void MainWindow::OpenPredictorOutputFotder()
     }
     if (!is_directory(PredictorOutputFolder))
     {
-        ui->textEditOut->append(QString::fromStdString( "Predicto rOutput folder : " + PredictorOutputFolder.string()+ " This is not a directory path "));
+        ui->textEditOut->append(QString::fromStdString( "Predictor Output folder : " + PredictorOutputFolder.string()+ " This is not a directory path "));
     }
     ui->lineEditPredictorOutputFolder->setText(QString::fromStdString(PredictorOutputFolder.string()));
 
@@ -548,7 +548,7 @@ void MainWindow::CreateBat()
                               + " -c " + ClassyfiersFile.string()
                               + " -i " + FeaturesFile.string()
                               + " -o " + PredictorOutFile.string()
-                              + "-v \n";
+                              + " -v \n";
 
         }
 
@@ -702,15 +702,6 @@ void MainWindow::on_pushButtonOpenPredictorOutputFolder_clicked()
     else
         return;
     OpenPredictorOutputFotder();
-    if (!exists(PredictorOutputFolder))
-    {
-        ui->textEditOut->append(QString::fromStdString("Image folder : " + PredictorOutputFolder.string()+ " not exists "));
-    }
-    if (!is_directory(PredictorOutputFolder))
-    {
-        ui->textEditOut->append(QString::fromStdString( " Image folder : " + PredictorOutputFolder.string()+ " This is not a directory path "));
-    }
-    ui->lineEditPredictorOutputFolder->setText(QString::fromStdString(PredictorOutputFolder.string()));
 }
 
 void MainWindow::on_pushButtonOpenMzFeaturesOutFolder_clicked()
@@ -806,4 +797,9 @@ void MainWindow::on_pushButtonClearOut_clicked()
 void MainWindow::on_pushButtonCreateBatFile_clicked()
 {
     CreateBat();
+}
+
+void MainWindow::on_pushButtonReload_clicked()
+{
+    ReloadPaths();
 }

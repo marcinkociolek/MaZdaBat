@@ -98,6 +98,8 @@ private slots:
 
     void on_pushButtonCreateBatFile_clicked();
 
+    void on_pushButtonReload_clicked();
+
 private:
     Ui::MainWindow *ui;
 };
