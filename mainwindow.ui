@@ -141,7 +141,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>H:/CTquality/Features/Gabor/l26f3</string>
+     <string>H:/CTquality/Features</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="lineEditOutFilePrefix">
@@ -154,7 +154,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>CT_l26f3_</string>
+     <string>CT_</string>
     </property>
    </widget>
    <widget class="QLabel" name="labelOutFilePrefix">
@@ -174,7 +174,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>610</y>
+      <y>650</y>
       <width>351</width>
       <height>70</height>
      </rect>
@@ -184,7 +184,7 @@
     <property name="geometry">
      <rect>
       <x>380</x>
-      <y>610</y>
+      <y>650</y>
       <width>411</width>
       <height>70</height>
      </rect>
@@ -226,7 +226,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Gaborl26f3</string>
+     <string>CT_</string>
     </property>
    </widget>
    <widget class="QLabel" name="labelBatFileName">
@@ -246,20 +246,20 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>370</y>
+      <y>410</y>
       <width>113</width>
       <height>21</height>
      </rect>
     </property>
     <property name="text">
-     <string>.+l26.+.dcm</string>
+     <string>.+.dcm</string>
     </property>
    </widget>
    <widget class="QLabel" name="labelImageFilePattern">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>350</y>
+      <y>390</y>
       <width>91</width>
       <height>16</height>
      </rect>
@@ -272,7 +272,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>400</y>
+      <y>440</y>
       <width>251</width>
       <height>191</height>
      </rect>
@@ -301,7 +301,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>H:/CTquality/Classyfier/Gabor/l26f3</string>
+     <string>H:/CTquality/Classyfier</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButtonOpenPredictorOutputFolder">
@@ -327,7 +327,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>H:/CTquality/PredictOut/Gabor/l26f3</string>
+     <string>H:/CTquality/PredictOut</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButtonOpenClassyfiersOptionsFile">
@@ -360,7 +360,7 @@
     <property name="geometry">
      <rect>
       <x>280</x>
-      <y>350</y>
+      <y>390</y>
       <width>91</width>
       <height>16</height>
      </rect>
@@ -373,7 +373,7 @@
     <property name="geometry">
      <rect>
       <x>280</x>
-      <y>370</y>
+      <y>410</y>
       <width>113</width>
       <height>21</height>
      </rect>
@@ -386,7 +386,7 @@
     <property name="geometry">
      <rect>
       <x>280</x>
-      <y>400</y>
+      <y>440</y>
       <width>251</width>
       <height>191</height>
      </rect>
@@ -396,20 +396,20 @@
     <property name="geometry">
      <rect>
       <x>540</x>
-      <y>370</y>
+      <y>410</y>
       <width>113</width>
       <height>21</height>
      </rect>
     </property>
     <property name="text">
-     <string>.+Gabor.+.txt</string>
+     <string>.+.txt</string>
     </property>
    </widget>
    <widget class="QLabel" name="labelOptionsFilePattern">
     <property name="geometry">
      <rect>
       <x>540</x>
-      <y>350</y>
+      <y>390</y>
       <width>91</width>
       <height>16</height>
      </rect>
@@ -422,7 +422,7 @@
     <property name="geometry">
      <rect>
       <x>540</x>
-      <y>400</y>
+      <y>440</y>
       <width>251</width>
       <height>191</height>
      </rect>
@@ -497,13 +497,81 @@
     <property name="geometry">
      <rect>
       <x>410</x>
-      <y>340</y>
+      <y>380</y>
       <width>80</width>
       <height>22</height>
      </rect>
     </property>
     <property name="text">
      <string>Reload</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEditFeatureFamily">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>360</y>
+      <width>113</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Gabor</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEditImageClass">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>360</y>
+      <width>113</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>l26f3</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelImageDistortion">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>340</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Image class</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelFeatureFamily">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>340</y>
+      <width>81</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Feature Family</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkBoxUseSubfolders">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>360</y>
+      <width>101</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Use Subfolders</string>
+    </property>
+    <property name="checked">
+     <bool>true</bool>
     </property>
    </widget>
   </widget>

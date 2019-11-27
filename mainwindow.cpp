@@ -86,6 +86,20 @@ void MainWindow::ReloadPaths()
     ClassyfiersOptionFile = path(ui->lineEditClassyfiersOptionsFile->text().toStdString());
     PredictorOutputFolder = path(ui->lineEditPredictorOutputFolder->text().toStdString());
     BatFolder = path(ui->lineEditBatFolder->text().toStdString());
+    if(ui->checkBoxUseSubfolders->checkState())
+    {
+        ImageFolder = ImageFolder.append(ui->lineEditImageClass->text().toStdString());
+
+        MzFeaturesOutFolder = MzFeaturesOutFolder.append(ui->lineEditFeatureFamily->text().toStdString());
+        MzFeaturesOutFolder = MzFeaturesOutFolder.append(ui->lineEditImageClass->text().toStdString());
+
+        ClassyfiersFolder = ClassyfiersFolder.append(ui->lineEditFeatureFamily->text().toStdString());
+        ClassyfiersFolder = ClassyfiersFolder.append(ui->lineEditImageClass->text().toStdString());
+
+        PredictorOutputFolder = PredictorOutputFolder.append(ui->lineEditFeatureFamily->text().toStdString());
+        PredictorOutputFolder = PredictorOutputFolder.append(ui->lineEditImageClass->text().toStdString());
+    }
+
     OpenQMaZdaFolder();
     OpenImageFolder();
     OpenROIFolder();
@@ -135,12 +149,13 @@ void MainWindow::OpenImageFolder()
     if (!exists(ImageFolder))
     {
         ui->textEditOut->append(QString::fromStdString("Image folder : " + ImageFolder.string()+ " not exists "));
+        return;
     }
     if (!is_directory(ImageFolder))
     {
         ui->textEditOut->append(QString::fromStdString( " Image folder : " + ImageFolder.string()+ " This is not a directory path "));
+        return;
     }
-    ui->lineEditImageFolder->setText(QString::fromStdString(ImageFolder.string()));
     ReadFolder(ImageFolder, &ImageFileNamesVector, ui->lineEditImageFilePattern->text().toStdString() );
     ui->textEditImageFiles->clear();
     ui->textEditImageFiles->append(QString::fromStdString(StringVectorToString(ImageFileNamesVector)));
@@ -151,12 +166,13 @@ void MainWindow::OpenROIFolder()
     if (!exists(ROIFolder))
     {
         ui->textEditOut->append(QString::fromStdString("ROI folder : " + ROIFolder.string()+ " not exists "));
+        return;
     }
     if (!is_directory(ROIFolder))
     {
         ui->textEditOut->append(QString::fromStdString( " Image folder : " + ROIFolder.string()+ " This is not a directory path "));
+        return;
     }
-    ui->lineEditROIFolder->setText(QString::fromStdString(ROIFolder.string()));
     ReadFolder(ROIFolder, &ROIFileNamesVector, ui->lineEditROIFilePattern->text().toStdString() );
     ui->textEditROIFiles->clear();
     ui->textEditROIFiles->append(QString::fromStdString(StringVectorToString(ROIFileNamesVector)));
@@ -167,13 +183,25 @@ void MainWindow::OpenOptionsFolder()
     if (!exists(OptionsFolder))
     {
         ui->textEditOut->append(QString::fromStdString("Options folder : " + OptionsFolder.string()+ " not exists "));
+        return;
     }
     if (!is_directory(OptionsFolder))
     {
         ui->textEditOut->append(QString::fromStdString( " Options folder : " + OptionsFolder.string()+ " This is not a directory path "));
+        return;
     }
-    ui->lineEditOptionsFolder->setText(QString::fromStdString(OptionsFolder.string()));
-    ReadFolder(OptionsFolder, &OptionsFileNamesVector, ui->lineEditOptionsFilePattern->text().toStdString() );
+    string optionsPattern;
+    if(ui->checkBoxUseSubfolders->checkState())
+    {
+        optionsPattern = ".+" +
+                         ui->lineEditFeatureFamily->text().toStdString() +
+                         ui->lineEditOptionsFilePattern->text().toStdString();
+    }
+    else
+    {
+        optionsPattern = ui->lineEditOptionsFilePattern->text().toStdString();
+    }
+    ReadFolder(OptionsFolder, &OptionsFileNamesVector, optionsPattern );
     ui->textEditOptionsFiles->clear();
     ui->textEditOptionsFiles->append(QString::fromStdString(StringVectorToString(OptionsFileNamesVector)));
 }
@@ -183,12 +211,14 @@ void MainWindow::OpenMzFeauresFolder()
     if (!exists(MzFeaturesOutFolder))
     {
         ui->textEditOut->append(QString::fromStdString("MzFeatutes folder : " + MzFeaturesOutFolder.string()+ " not exists "));
+        return;
     }
     if (!is_directory(MzFeaturesOutFolder))
     {
         ui->textEditOut->append(QString::fromStdString( " MzFeatutes folder : " + MzFeaturesOutFolder.string()+ " This is not a directory path "));
+        return;
     }
-    ui->lineEditMzFeaturesOutFolder->setText(QString::fromStdString(MzFeaturesOutFolder.string()));
+
 }
 //------------------------------------------------------------------------------------------------------------------------------
 void MainWindow::OpenClassyfiersFolder()
@@ -196,12 +226,13 @@ void MainWindow::OpenClassyfiersFolder()
     if (!exists(ClassyfiersFolder))
     {
         ui->textEditOut->append(QString::fromStdString("Classyfiers folder : " + ClassyfiersFolder.string()+ " not exists "));
+        return;
     }
     if (!is_directory(ClassyfiersFolder))
     {
         ui->textEditOut->append(QString::fromStdString( " Classyfiers folder : " + ClassyfiersFolder.string()+ " This is not a directory path "));
+        return;
     }
-    ui->lineEditClassyfiersFolder->setText(QString::fromStdString(ClassyfiersFolder.string()));
 }
 //------------------------------------------------------------------------------------------------------------------------------
 void MainWindow::OpenClassyfiersOptionsFile()
@@ -209,8 +240,9 @@ void MainWindow::OpenClassyfiersOptionsFile()
     if (!exists(ClassyfiersOptionFile))
     {
         ui->textEditOut->append(QString::fromStdString("Classyfiers Options File : " + ClassyfiersOptionFile.string()+ " not exists "));
+        return;
     }
-    ui->lineEditClassyfiersOptionsFile->setText(QString::fromStdString(ClassyfiersOptionFile.string()));
+
 }
 
 //------------------------------------------------------------------------------------------------------------------------------
@@ -219,12 +251,13 @@ void MainWindow::OpenPredictorOutputFotder()
     if (!exists(PredictorOutputFolder))
     {
         ui->textEditOut->append(QString::fromStdString("Predictor Output folder : " + PredictorOutputFolder.string()+ " not exists "));
+        return;
     }
     if (!is_directory(PredictorOutputFolder))
     {
         ui->textEditOut->append(QString::fromStdString( "Predictor Output folder : " + PredictorOutputFolder.string()+ " This is not a directory path "));
+        return;
     }
-    ui->lineEditPredictorOutputFolder->setText(QString::fromStdString(PredictorOutputFolder.string()));
 
 }
 //------------------------------------------------------------------------------------------------------------------------------
@@ -233,17 +266,19 @@ void MainWindow::OpenBatFolder()
     if (!exists(BatFolder))
     {
         ui->textEditOut->append(QString::fromStdString("Image folder : " + BatFolder.string()+ " not exists "));
+        return;
     }
     if (!is_directory(BatFolder))
     {
         ui->textEditOut->append(QString::fromStdString( " Image folder : " + BatFolder.string()+ " This is not a directory path "));
+        return;
     }
-    ui->lineEditBatFolder->setText(QString::fromStdString(BatFolder.string()));
-
 }
 //------------------------------------------------------------------------------------------------------------------------------
 void MainWindow::CreateBat()
 {
+    ReloadPaths();
+
     if (!exists(QMaZdaFolder))
     {
         ui->textEditOut->append(QString::fromStdString("QMaZda folder : " + QMaZdaFolder.string()+ " not exists "));
@@ -386,10 +421,27 @@ void MainWindow::CreateBat()
     }
     path BatFile;
 
+
     if(ui->checkBoxCreateFeaturesBat->checkState())
     {
         BatFile = BatFolder;
-        BatFile.append(ui->lineEditBatFileName->text().toStdString() + "Feat.bat");
+        string prefix;
+        if(ui->checkBoxUseSubfolders->checkState())
+        {
+            BatFile.append(ui->lineEditBatFileName->text().toStdString() +
+                           ui->lineEditFeatureFamily->text().toStdString() +
+                           ui->lineEditImageClass->text().toStdString() +
+                           "Feat.bat");
+            prefix = ui->lineEditOutFilePrefix->text().toStdString() +
+                     ui->lineEditImageClass->text().toStdString();
+        }
+        else
+        {
+            BatFile.append(ui->lineEditBatFileName->text().toStdString()
+                           + "Feat.bat");
+            prefix = ui->lineEditOutFilePrefix->text().toStdString();
+        }
+
 
         string BatFileContent = "cls\n";
         path ImFile, RoiFile, FeaturesFile, OptionsFile;
@@ -407,7 +459,6 @@ void MainWindow::CreateBat()
             OptionsFile.append(OptionsFileNamesVector[o]);
 
             FeaturesFile = MzFeaturesOutFolder;
-            string prefix = ui->lineEditOutFilePrefix->text().toStdString();
             FeaturesFile.append(prefix + OptionsFile.stem().string() + ".csv");
 
             BatFileContent += MZGeneratorPath.string()
@@ -449,7 +500,7 @@ void MainWindow::CreateBat()
             OptionsFile.append(OptionsFileNamesVector[o]);
 
             FeaturesFile = MzFeaturesOutFolder;
-            string prefix = ui->lineEditOutFilePrefix->text().toStdString();
+
             FeaturesFile.append("t_" + prefix + OptionsFile.stem().string() + ".csv");
 
             BatFileContent += MZGeneratorPath.string()
@@ -488,7 +539,23 @@ void MainWindow::CreateBat()
     if(ui->checkBoxCreateTrainingBat->checkState())
     {
         BatFile = BatFolder;
-        BatFile.append(ui->lineEditBatFileName->text().toStdString() + "Train.bat");
+        string prefix;
+        if(ui->checkBoxUseSubfolders->checkState())
+        {
+            BatFile.append(ui->lineEditBatFileName->text().toStdString() +
+                           ui->lineEditFeatureFamily->text().toStdString() +
+                           ui->lineEditImageClass->text().toStdString() +
+                           + "Train.bat");
+            prefix = ui->lineEditOutFilePrefix->text().toStdString() +
+                     ui->lineEditImageClass->text().toStdString();
+        }
+        else
+        {
+            BatFile.append(ui->lineEditBatFileName->text().toStdString() +
+                          "Train.bat");
+            prefix = ui->lineEditOutFilePrefix->text().toStdString();
+        }
+
 
         string BatFileContent = "cls\n";
         path FeaturesFile, OptionsFile, TrainingOptionsFile, ClassyfiersFile;
@@ -499,7 +566,7 @@ void MainWindow::CreateBat()
             OptionsFile.append(OptionsFileNamesVector[o]);
 
             FeaturesFile = MzFeaturesOutFolder;
-            string prefix = ui->lineEditOutFilePrefix->text().toStdString();
+
             FeaturesFile.append("t_" + prefix + OptionsFile.stem().string() + ".csv");
 
             ClassyfiersFile = ClassyfiersFolder;
@@ -525,7 +592,23 @@ void MainWindow::CreateBat()
     if(ui->checkBoxCreatePredictorBat->checkState())
     {
         BatFile = BatFolder;
-        BatFile.append(ui->lineEditBatFileName->text().toStdString() + "Predict.bat");
+        string prefix;
+        if(ui->checkBoxUseSubfolders->checkState())
+        {
+            BatFile.append(ui->lineEditBatFileName->text().toStdString() +
+                           ui->lineEditFeatureFamily->text().toStdString() +
+                           ui->lineEditImageClass->text().toStdString() +
+                           "Predict.bat");
+            prefix = ui->lineEditOutFilePrefix->text().toStdString() +
+                     ui->lineEditImageClass->text().toStdString();
+        }
+        else
+        {
+            BatFile.append(ui->lineEditBatFileName->text().toStdString() +
+                          "Predict.bat");
+            prefix = ui->lineEditOutFilePrefix->text().toStdString();
+        }
+
 
         string BatFileContent = "cls\n";
         path FeaturesFile, OptionsFile, TrainingOptionsFile, ClassyfiersFile, PredictorOutFile;
@@ -536,7 +619,7 @@ void MainWindow::CreateBat()
             OptionsFile.append(OptionsFileNamesVector[o]);
 
             FeaturesFile = MzFeaturesOutFolder;
-            string prefix = ui->lineEditOutFilePrefix->text().toStdString();
+
             FeaturesFile.append(prefix + OptionsFile.stem().string() + ".csv");
 
             ClassyfiersFile = ClassyfiersFolder;
@@ -561,6 +644,7 @@ void MainWindow::CreateBat()
         FileToSave.close();
         BatFileContent.clear();
     }
+    ReloadPaths();
 }
 //------------------------------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------------------------
