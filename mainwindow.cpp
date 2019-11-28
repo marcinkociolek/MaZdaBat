@@ -77,29 +77,6 @@ MainWindow::~MainWindow()
 //------------------------------------------------------------------------------------------------------------------------------
 void MainWindow::ReloadPaths()
 {
-    QMaZdaFolder = path(ui->lineEditMaZdaFolder->text().toStdString());
-    ImageFolder = path(ui->lineEditImageFolder->text().toStdString());
-    ROIFolder = path(ui->lineEditROIFolder->text().toStdString());
-    OptionsFolder = path(ui->lineEditOptionsFolder->text().toStdString());
-    MzFeaturesOutFolder = path(ui->lineEditMzFeaturesOutFolder->text().toStdString());
-    ClassyfiersFolder = path(ui->lineEditClassyfiersFolder->text().toStdString());
-    ClassyfiersOptionFile = path(ui->lineEditClassyfiersOptionsFile->text().toStdString());
-    PredictorOutputFolder = path(ui->lineEditPredictorOutputFolder->text().toStdString());
-    BatFolder = path(ui->lineEditBatFolder->text().toStdString());
-    if(ui->checkBoxUseSubfolders->checkState())
-    {
-        ImageFolder = ImageFolder.append(ui->lineEditImageClass->text().toStdString());
-
-        MzFeaturesOutFolder = MzFeaturesOutFolder.append(ui->lineEditFeatureFamily->text().toStdString());
-        MzFeaturesOutFolder = MzFeaturesOutFolder.append(ui->lineEditImageClass->text().toStdString());
-
-        ClassyfiersFolder = ClassyfiersFolder.append(ui->lineEditFeatureFamily->text().toStdString());
-        ClassyfiersFolder = ClassyfiersFolder.append(ui->lineEditImageClass->text().toStdString());
-
-        PredictorOutputFolder = PredictorOutputFolder.append(ui->lineEditFeatureFamily->text().toStdString());
-        PredictorOutputFolder = PredictorOutputFolder.append(ui->lineEditImageClass->text().toStdString());
-    }
-
     OpenQMaZdaFolder();
     OpenImageFolder();
     OpenROIFolder();
@@ -113,13 +90,17 @@ void MainWindow::ReloadPaths()
 //------------------------------------------------------------------------------------------------------------------------------
 void MainWindow::OpenQMaZdaFolder()
 {
+    QMaZdaFolder = path(ui->lineEditMaZdaFolder->text().toStdWString());
+
     if (!exists(QMaZdaFolder))
     {
         ui->textEditOut->append(QString::fromStdString("QMaZda folder : " + QMaZdaFolder.string()+ " not exists "));
+        return;
     }
     if (!is_directory(QMaZdaFolder))
     {
         ui->textEditOut->append(QString::fromStdString( "QMaZda folder : " + QMaZdaFolder.string()+ " This is not a directory path "));
+        return;
     }
     ui->lineEditMaZdaFolder->setText(QString::fromStdString(QMaZdaFolder.string()));
     path MZGeneratorPath = QMaZdaFolder;
@@ -146,6 +127,15 @@ void MainWindow::OpenQMaZdaFolder()
 //------------------------------------------------------------------------------------------------------------------------------
 void MainWindow::OpenImageFolder()
 {
+    ImageFolder = path(ui->lineEditImageFolder->text().toStdWString());
+    if(ui->checkBoxUseSubfolders->checkState())
+    {
+        ImageFolder = ImageFolder.append(ui->lineEditImageClass->text().toStdString());
+    }
+
+    ImageFileNamesVector.clear();
+    ui->textEditImageFiles->clear();
+
     if (!exists(ImageFolder))
     {
         ui->textEditOut->append(QString::fromStdString("Image folder : " + ImageFolder.string()+ " not exists "));
@@ -157,12 +147,15 @@ void MainWindow::OpenImageFolder()
         return;
     }
     ReadFolder(ImageFolder, &ImageFileNamesVector, ui->lineEditImageFilePattern->text().toStdString() );
-    ui->textEditImageFiles->clear();
+
     ui->textEditImageFiles->append(QString::fromStdString(StringVectorToString(ImageFileNamesVector)));
 }
 //------------------------------------------------------------------------------------------------------------------------------
 void MainWindow::OpenROIFolder()
 {
+    ROIFolder = path(ui->lineEditROIFolder->text().toStdString());
+    ROIFileNamesVector.clear();
+    ui->textEditROIFiles->clear();
     if (!exists(ROIFolder))
     {
         ui->textEditOut->append(QString::fromStdString("ROI folder : " + ROIFolder.string()+ " not exists "));
@@ -174,12 +167,15 @@ void MainWindow::OpenROIFolder()
         return;
     }
     ReadFolder(ROIFolder, &ROIFileNamesVector, ui->lineEditROIFilePattern->text().toStdString() );
-    ui->textEditROIFiles->clear();
     ui->textEditROIFiles->append(QString::fromStdString(StringVectorToString(ROIFileNamesVector)));
 }
 //------------------------------------------------------------------------------------------------------------------------------
 void MainWindow::OpenOptionsFolder()
 {
+    OptionsFolder = path(ui->lineEditOptionsFolder->text().toStdString());
+    OptionsFileNamesVector.clear();
+    ui->textEditOptionsFiles->clear();
+
     if (!exists(OptionsFolder))
     {
         ui->textEditOut->append(QString::fromStdString("Options folder : " + OptionsFolder.string()+ " not exists "));
@@ -190,7 +186,9 @@ void MainWindow::OpenOptionsFolder()
         ui->textEditOut->append(QString::fromStdString( " Options folder : " + OptionsFolder.string()+ " This is not a directory path "));
         return;
     }
+
     string optionsPattern;
+
     if(ui->checkBoxUseSubfolders->checkState())
     {
         optionsPattern = ".+" +
@@ -202,12 +200,19 @@ void MainWindow::OpenOptionsFolder()
         optionsPattern = ui->lineEditOptionsFilePattern->text().toStdString();
     }
     ReadFolder(OptionsFolder, &OptionsFileNamesVector, optionsPattern );
-    ui->textEditOptionsFiles->clear();
     ui->textEditOptionsFiles->append(QString::fromStdString(StringVectorToString(OptionsFileNamesVector)));
 }
 //------------------------------------------------------------------------------------------------------------------------------
 void MainWindow::OpenMzFeauresFolder()
 {
+    MzFeaturesOutFolder = path(ui->lineEditMzFeaturesOutFolder->text().toStdString());
+
+    if(ui->checkBoxUseSubfolders->checkState())
+    {
+        MzFeaturesOutFolder = MzFeaturesOutFolder.append(ui->lineEditFeatureFamily->text().toStdString());
+        MzFeaturesOutFolder = MzFeaturesOutFolder.append(ui->lineEditImageClass->text().toStdString());
+    }
+
     if (!exists(MzFeaturesOutFolder))
     {
         ui->textEditOut->append(QString::fromStdString("MzFeatutes folder : " + MzFeaturesOutFolder.string()+ " not exists "));
@@ -223,6 +228,14 @@ void MainWindow::OpenMzFeauresFolder()
 //------------------------------------------------------------------------------------------------------------------------------
 void MainWindow::OpenClassyfiersFolder()
 {
+    ClassyfiersFolder = path(ui->lineEditClassyfiersFolder->text().toStdString());
+
+    if(ui->checkBoxUseSubfolders->checkState())
+    {
+        ClassyfiersFolder = ClassyfiersFolder.append(ui->lineEditFeatureFamily->text().toStdString());
+        ClassyfiersFolder = ClassyfiersFolder.append(ui->lineEditImageClass->text().toStdString());
+    }
+
     if (!exists(ClassyfiersFolder))
     {
         ui->textEditOut->append(QString::fromStdString("Classyfiers folder : " + ClassyfiersFolder.string()+ " not exists "));
@@ -237,6 +250,7 @@ void MainWindow::OpenClassyfiersFolder()
 //------------------------------------------------------------------------------------------------------------------------------
 void MainWindow::OpenClassyfiersOptionsFile()
 {
+    ClassyfiersOptionFile = path(ui->lineEditClassyfiersOptionsFile->text().toStdString());
     if (!exists(ClassyfiersOptionFile))
     {
         ui->textEditOut->append(QString::fromStdString("Classyfiers Options File : " + ClassyfiersOptionFile.string()+ " not exists "));
@@ -248,6 +262,14 @@ void MainWindow::OpenClassyfiersOptionsFile()
 //------------------------------------------------------------------------------------------------------------------------------
 void MainWindow::OpenPredictorOutputFotder()
 {
+    PredictorOutputFolder = path(ui->lineEditPredictorOutputFolder->text().toStdString());
+
+    if(ui->checkBoxUseSubfolders->checkState())
+    {
+        PredictorOutputFolder = PredictorOutputFolder.append(ui->lineEditFeatureFamily->text().toStdString());
+        PredictorOutputFolder = PredictorOutputFolder.append(ui->lineEditImageClass->text().toStdString());
+    }
+
     if (!exists(PredictorOutputFolder))
     {
         ui->textEditOut->append(QString::fromStdString("Predictor Output folder : " + PredictorOutputFolder.string()+ " not exists "));
@@ -263,6 +285,7 @@ void MainWindow::OpenPredictorOutputFotder()
 //------------------------------------------------------------------------------------------------------------------------------
 void MainWindow::OpenBatFolder()
 {
+    BatFolder = path(ui->lineEditBatFolder->text().toStdString());
     if (!exists(BatFolder))
     {
         ui->textEditOut->append(QString::fromStdString("Image folder : " + BatFolder.string()+ " not exists "));
@@ -277,6 +300,7 @@ void MainWindow::OpenBatFolder()
 //------------------------------------------------------------------------------------------------------------------------------
 void MainWindow::CreateBat()
 {
+    ui->textEditOut->clear();
     ReloadPaths();
 
     if (!exists(QMaZdaFolder))
@@ -419,6 +443,7 @@ void MainWindow::CreateBat()
         ui->textEditOut->append(QString::fromStdString( "number of imaged doesnot match nr of ROIs"));
         return;
     }
+
     path BatFile;
 
 
@@ -644,7 +669,6 @@ void MainWindow::CreateBat()
         FileToSave.close();
         BatFileContent.clear();
     }
-    ReloadPaths();
 }
 //------------------------------------------------------------------------------------------------------------------------------
 //------------------------------------------------------------------------------------------------------------------------------
@@ -656,11 +680,17 @@ void MainWindow::on_pushButtonOpenQMaZdaFolder_clicked()
 {
     QFileDialog dialog(this, "Open Folder");
     dialog.setFileMode(QFileDialog::Directory);
-    dialog.setDirectory(QString::fromStdString(QMaZdaFolder.string()));
+
+    path tempDir = path(ui->lineEditMaZdaFolder->text().toStdString());
+    if(exists(tempDir) && is_directory(tempDir))
+    {
+        dialog.setDirectory( QString::fromStdString(tempDir.string()));
+    }
 
     if(dialog.exec())
     {
-        QMaZdaFolder = dialog.directory().path().toStdWString();
+        ui->lineEditMaZdaFolder->setText(dialog.directory().path());
+        //QMaZdaFolder = dialog.directory().path().toStdWString();
     }
     else
         return;
@@ -671,12 +701,17 @@ void MainWindow::on_pushButtonUpenImageFolder_clicked()
 {
     QFileDialog dialog(this, "Open Folder");
     dialog.setFileMode(QFileDialog::Directory);
-    //dialog.setDirectory(QString::fromStdString(ImageFolder.string()));
-    dialog.setDirectory(ui->lineEditImageFolder->text());
+
+    path tempDir = path(ui->lineEditImageFolder->text().toStdString());
+    if(exists(tempDir) && is_directory(tempDir))
+    {
+        dialog.setDirectory( QString::fromStdString(tempDir.string()));
+    }
 
     if(dialog.exec())
     {
-        ImageFolder = dialog.directory().path().toStdWString();
+        ui->lineEditImageFolder->setText(dialog.directory().path());
+        //ImageFolder = dialog.directory().path().toStdWString();
     }
     else
         return;
@@ -688,11 +723,17 @@ void MainWindow::on_pushButtonOpenRoiFolder_clicked()
 {
     QFileDialog dialog(this, "Open Folder");
     dialog.setFileMode(QFileDialog::Directory);
-    dialog.setDirectory(QString::fromStdString(ROIFolder.string()));
+
+    path tempDir = path(ui->lineEditROIFolder->text().toStdString());
+    if(exists(tempDir) && is_directory(tempDir))
+    {
+        dialog.setDirectory( QString::fromStdString(tempDir.string()));
+    }
 
     if(dialog.exec())
     {
-        ROIFolder = dialog.directory().path().toStdWString();
+        ui->lineEditROIFolder->setText(dialog.directory().path());
+        //ROIFolder = dialog.directory().path().toStdWString();
     }
     else
         return;
@@ -703,11 +744,17 @@ void MainWindow::on_pushButtonOpenOptionsFolder_clicked()
 {
     QFileDialog dialog(this, "Open Folder");
     dialog.setFileMode(QFileDialog::Directory);
-    dialog.setDirectory(QString::fromStdString(OptionsFolder.string()));
+
+    path tempDir = path(ui->lineEditOptionsFolder->text().toStdString());
+    if(exists(tempDir) && is_directory(tempDir))
+    {
+        dialog.setDirectory( QString::fromStdString(tempDir.string()));
+    }
 
     if(dialog.exec())
     {
-        OptionsFolder = dialog.directory().path().toStdWString();
+        ui->lineEditOptionsFolder->setText(dialog.directory().path());
+        //OptionsFolder = dialog.directory().path().toStdWString();
     }
     else
         return;
@@ -718,55 +765,59 @@ void MainWindow::on_pushButtonOpenBatFolder_clicked()
 {
     QFileDialog dialog(this, "Open Folder");
     dialog.setFileMode(QFileDialog::Directory);
-    dialog.setDirectory(QString::fromStdString(BatFolder.string()));
+
+    path tempDir = path(ui->lineEditBatFolder->text().toStdString());
+    if(exists(tempDir) && is_directory(tempDir))
+    {
+        dialog.setDirectory( QString::fromStdString(tempDir.string()));
+    }
 
     if(dialog.exec())
     {
-        BatFolder = dialog.directory().path().toStdWString();
+        ui->lineEditBatFolder->setText(dialog.directory().path());
+        //BatFolder = dialog.directory().path().toStdWString();
     }
     else
         return;
     OpenBatFolder();
-    if (!exists(BatFolder))
-    {
-        ui->textEditOut->append(QString::fromStdString("Image folder : " + BatFolder.string()+ " not exists "));
-        BatFolder = path("C:/");
-    }
-    if (!is_directory(BatFolder))
-    {
-        ui->textEditOut->append(QString::fromStdString( " Image folder : " + BatFolder.string()+ " This is not a directory path "));
-        BatFolder = path("C:/");
-    }
-    ui->lineEditBatFolder->setText(QString::fromStdString(BatFolder.string()));
 }
-
-
 
 void MainWindow::on_pushButtonOpenClassyfiersFolder_clicked()
 {
     QFileDialog dialog(this, "Open Folder");
     dialog.setFileMode(QFileDialog::Directory);
-    dialog.setDirectory(QString::fromStdString(ClassyfiersFolder.string()));
+
+    path tempDir = path(ui->lineEditClassyfiersFolder->text().toStdString());
+    if(exists(tempDir) && is_directory(tempDir))
+    {
+        dialog.setDirectory( QString::fromStdString(tempDir.string()));
+    }
 
     if(dialog.exec())
     {
-        ClassyfiersFolder = dialog.directory().path().toStdWString();
+        ui->lineEditClassyfiersFolder->setText(dialog.directory().path());
+        //ClassyfiersFolder = dialog.directory().path().toStdWString();
     }
     else
         return;
     OpenClassyfiersFolder();
 }
 
-
 void MainWindow::on_pushButtonOpenClassyfiersOptionsFile_clicked()
 {
     QFileDialog dialog(this, "Open File");
     dialog.setFileMode(QFileDialog::AnyFile);
-    //dialog.setDirectory(QString::fromStdString(ClassyfiersOptionFile..string()));
+
+    path tempDir = path(ui->lineEditClassyfiersOptionsFile->text().toStdString());
+    if(exists(tempDir) && is_directory(tempDir))
+    {
+        dialog.setDirectory( QString::fromStdString(tempDir.string()));
+    }
 
     if(dialog.exec())
     {
-        ClassyfiersOptionFile = path(dialog.selectedFiles()[0].toStdWString());
+        ui->lineEditClassyfiersOptionsFile->setText(dialog.selectedFiles()[0]);
+        //ClassyfiersOptionFile = path(dialog.selectedFiles()[0].toStdWString());
     }
     else
         return;
@@ -777,11 +828,17 @@ void MainWindow::on_pushButtonOpenPredictorOutputFolder_clicked()
 {
     QFileDialog dialog(this, "Open Folder");
     dialog.setFileMode(QFileDialog::Directory);
-    dialog.setDirectory(QString::fromStdString(PredictorOutputFolder.string()));
+
+    path tempDir = path(ui->lineEditPredictorOutputFolder->text().toStdString());
+    if(exists(tempDir) && is_directory(tempDir))
+    {
+        dialog.setDirectory( QString::fromStdString(tempDir.string()));
+    }
 
     if(dialog.exec())
     {
-        PredictorOutputFolder = dialog.directory().path().toStdWString();
+        ui->lineEditPredictorOutputFolder->setText(dialog.directory().path());
+        //PredictorOutputFolder = dialog.directory().path().toStdWString();
     }
     else
         return;
@@ -792,11 +849,17 @@ void MainWindow::on_pushButtonOpenMzFeaturesOutFolder_clicked()
 {
     QFileDialog dialog(this, "Open Folder");
     dialog.setFileMode(QFileDialog::Directory);
-    dialog.setDirectory(QString::fromStdString(MzFeaturesOutFolder.string()));
+
+    path tempDir = path(ui->lineEditMzFeaturesOutFolder->text().toStdString());
+    if(exists(tempDir) && is_directory(tempDir))
+    {
+        dialog.setDirectory( QString::fromStdString(tempDir.string()));
+    }
 
     if(dialog.exec())
     {
-        MzFeaturesOutFolder = dialog.directory().path().toStdWString();
+        ui->lineEditMzFeaturesOutFolder->setText(dialog.directory().path());
+        //MzFeaturesOutFolder = dialog.directory().path().toStdWString();
     }
     else
         return;
@@ -820,55 +883,55 @@ void MainWindow::on_lineEditROIFilePattern_returnPressed()
 
 void MainWindow::on_lineEditImageFolder_returnPressed()
 {
-    ImageFolder = path(ui->lineEditImageFolder->text().toStdString());
+    //ImageFolder = path(ui->lineEditImageFolder->text().toStdString());
     OpenImageFolder();
 }
 
 void MainWindow::on_lineEditROIFolder_returnPressed()
 {
-    ROIFolder = path(ui->lineEditROIFolder->text().toStdString());
+    //ROIFolder = path(ui->lineEditROIFolder->text().toStdString());
     OpenROIFolder();
 }
 
 void MainWindow::on_lineEditOptionsFolder_returnPressed()
 {
-    OptionsFolder = path(ui->lineEditOptionsFolder->text().toStdString());
+    //OptionsFolder = path(ui->lineEditOptionsFolder->text().toStdString());
     OpenOptionsFolder();
 }
 
 void MainWindow::on_lineEditMaZdaFolder_returnPressed()
 {
-    QMaZdaFolder = path(ui->lineEditMaZdaFolder->text().toStdString());
+    //QMaZdaFolder = path(ui->lineEditMaZdaFolder->text().toStdString());
     OpenQMaZdaFolder();
 }
 
 void MainWindow::on_lineEditMzFeaturesOutFolder_returnPressed()
 {
-    MzFeaturesOutFolder = path(ui->lineEditMzFeaturesOutFolder->text().toStdString());
+    //MzFeaturesOutFolder = path(ui->lineEditMzFeaturesOutFolder->text().toStdString());
     OpenMzFeauresFolder();
 }
 
 void MainWindow::on_lineEditClassyfiersFolder_returnPressed()
 {
-    ClassyfiersFolder = path(ui->lineEditClassyfiersFolder->text().toStdString());
+    //ClassyfiersFolder = path(ui->lineEditClassyfiersFolder->text().toStdString());
     OpenClassyfiersFolder();
 }
 
 void MainWindow::on_lineEditClassyfiersOptionsFile_returnPressed()
 {
-    ClassyfiersOptionFile = path(ui->lineEditClassyfiersOptionsFile->text().toStdString());
+    //ClassyfiersOptionFile = path(ui->lineEditClassyfiersOptionsFile->text().toStdString());
     OpenClassyfiersOptionsFile();
 }
 
 void MainWindow::on_lineEditPredictorOutputFolder_returnPressed()
 {
-    PredictorOutputFolder = path(ui->lineEditPredictorOutputFolder->text().toStdString());
+    //PredictorOutputFolder = path(ui->lineEditPredictorOutputFolder->text().toStdString());
     OpenPredictorOutputFotder();
 }
 
 void MainWindow::on_lineEditBatFolder_returnPressed()
 {
-    BatFolder = path(ui->lineEditBatFolder->text().toStdString());
+    //BatFolder = path(ui->lineEditBatFolder->text().toStdString());
     OpenBatFolder();
 }
 
