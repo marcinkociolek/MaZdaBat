@@ -76,7 +76,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>H:/CTquality/DCMSel</string>
+     <string>H:/NormPaperV03/CT/DCMSel</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="lineEditROIFolder">
@@ -89,7 +89,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>H:/CTquality/Roi</string>
+     <string>H:/NormPaperV03/CT/Roi</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButtonOpenOptionsFolder">
@@ -115,7 +115,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>H:/CTquality/Opt</string>
+     <string>H:/NormPaperV03/Opt</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButtonOpenMzFeaturesOutFolder">
@@ -141,7 +141,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>H:/CTquality/Features</string>
+     <string>H:/NormPaperV03/CT/Features</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="lineEditOutFilePrefix">
@@ -213,7 +213,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>H:/CTquality</string>
+     <string>H:/NormPaperV03//CT</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="lineEditBatFileName">
@@ -301,7 +301,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>H:/CTquality/Classyfier</string>
+     <string>H:/NormPaperV03/CT/Classyfier</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButtonOpenPredictorOutputFolder">
@@ -327,7 +327,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>H:/CTquality/PredictOut</string>
+     <string>H:/NormPaperV03/CT/PredictOut</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButtonOpenClassyfiersOptionsFile">
@@ -353,7 +353,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>H:/QMaZda19_08_beta/ClassOptions.txt</string>
+     <string>H:/NormPaperV03/ClassOptions.txt</string>
     </property>
    </widget>
    <widget class="QLabel" name="labelROIFilePattern">

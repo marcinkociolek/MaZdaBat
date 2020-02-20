@@ -473,6 +473,7 @@ void MainWindow::CreateBat()
         for(int o = 0; o < optionsCount; o++)
         {
             BatFileContent += "echo \"------------------------------------------------------------------------------------------\"\n";
+            BatFileContent += "echo \" Test Data\"\n";
             BatFileContent += "echo \"------------------------------------------------------------------------------------------\"\n";
             ImFile = ImageFolder;
             ImFile.append(ImageFileNamesVector[0]);
@@ -493,7 +494,7 @@ void MainWindow::CreateBat()
                               + " -f " + OptionsFile.string()
                               + "\n";
 
-            for(int i = 1; i < imagesCount; i++)
+            for(int i = 1; i < imagesCount; i+=2)
             {
                 ImFile = ImageFolder;
                 ImFile.append(ImageFileNamesVector[i]);
